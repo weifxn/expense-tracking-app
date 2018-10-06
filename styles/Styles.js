@@ -98,5 +98,10 @@ export default StyleSheet.create({
   mainModalFont: {
     fontSize: 45,
     fontWeight: 'bold'
+  },
+  mainModalFontInput: {
+    fontSize: 45,
+    fontWeight: 'bold',
+    color:'#3d6389'
   }
 })

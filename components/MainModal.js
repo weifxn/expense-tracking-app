@@ -12,7 +12,7 @@ import CardButton from './CardButton'
 import styles from '../styles/Styles'
 
 export default class MainModal extends React.Component {
-  
+
   render() {
     return (
       <Modal
@@ -38,10 +38,12 @@ export default class MainModal extends React.Component {
               </TouchableOpacity>
 
               <TextInput
-                style={styles.mainModalFont}
+                style={styles.mainModalFontInput}
                 placeholder="0.00"
                 autoFocus={true}
                 keyboardType='decimal-pad'
+                value={this.props.moneyValue}
+                onChangeText={this.props.moneyOnChangeText}
               />
             </View>
 
@@ -52,9 +54,10 @@ export default class MainModal extends React.Component {
               </Text>
 
               <TextInput
-                style={styles.mainModalFont}
-                value={this.props.desc}
+                style={styles.mainModalFontInput}
+                value={this.props.descValue}
                 clearTextOnFocus={true}
+                autoCapitalize = 'none'
               />
 
             </View>
