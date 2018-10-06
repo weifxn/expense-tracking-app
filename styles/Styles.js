@@ -6,10 +6,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#7a77fb',
-    // justifyContent: 'center'
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   card: {
     backgroundColor: '#fff',

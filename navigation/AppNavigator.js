@@ -1,10 +1,23 @@
+
 import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import main from '../screens/HomeScreen';
+import two from '../screens/initialPages/PageTwo';
+import three from '../screens/initialPages/PageThree';
+import { createStackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+const RootStack = createStackNavigator(
+  {
+    Main: main,
+    PageTwo: two,
+    PageThree: three,
+  },
+  {
+    initialRouteName: 'Main',
+  }
+);
 
-export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-});
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
+  }
+}
