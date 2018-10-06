@@ -23,7 +23,21 @@ export default class MainModal extends React.Component {
         onSwipe={this.props.onSwipe}
         swipeDirection="left"
         >
+
         <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row' }}>
+
+          <CardButton
+            name="Transfer"
+            style={styles.cardButtonSmall}
+            onPress={this.props.onPressCancel}
+          />
+          <CardButton
+            name="Widthdraw"
+            style={styles.cardButtonSmall}
+            onPress={this.props.onPressDone}
+          />
+          </View>
           <View style={styles.card}> 
             <Text style={styles.mainModalFont}>
               I have
@@ -81,6 +95,7 @@ export default class MainModal extends React.Component {
 
           
         </View>
+            <View style={{ padding: 25 }} />
 
         <KeyboardAvoidingView behavior="padding" />
       </Modal>

@@ -7,6 +7,9 @@ import CardInput from '../../components/CardInput';
 import CardButton from '../../components/CardButton';
 
 export default class pageTwo extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
   state = {
     monthAllow: this.props.navigation.getParam('monthAllow'),
     leftDays: this.props.navigation.getParam('leftDays'),
@@ -32,9 +35,10 @@ export default class pageTwo extends React.Component {
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+       <View style={{ padding: 130 }} />
+
       <Text style={{fontSize: 40, fontWeight: 'bold'}}> RM{this.state.monthAllow} </Text>
       <Text style={{fontSize: 40, fontWeight: 'bold'}}> how much you have left? </Text>
-      <Text style={{fontSize: 40, fontWeight: 'bold'}}> (including in wallet) </Text>
       <CardInput
         placeholder="0.00"
         style={styles.mainModalFontInput}

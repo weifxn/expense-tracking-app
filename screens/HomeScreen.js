@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isFinitdddee').then(itemsJSON => {
+    AsyncStorage.getItem('isFinishw').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -254,7 +254,7 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
       {this.state.isStart ? (
         <Main 
-          howMuch={this.state.dayLeft}
+          howMuch={parseFloat(this.state.dayLeft).toFixed(2)}
           onPressDone={()=>this.setModalVisible(true)}
           one={this.state.todayData[0]}
           two={this.state.todayData[1]}

@@ -52,6 +52,7 @@ export default class DetailHistory extends React.Component {
       <Text style={{fontSize: 40, fontWeight: 'bold'}}> Sept {this.state.listData[index][4]}</Text>
                   <View style={{ padding: 10 }} />
 
+    <View style={{ padding: 30 }} />
       <ProgressBar
             one={this.state.listData[index][0]}
             two={this.state.listData[index][1]}
@@ -59,10 +60,16 @@ export default class DetailHistory extends React.Component {
             four={this.state.listData[index][3]}
           />
 
-              <Text style={{fontSize: 40, fontWeight: 'bold'}}> Breakfast:RM{one}</Text>
-              <Text style={{fontSize: 40, fontWeight: 'bold'}}> Lunch: RM{two}</Text>
-              <Text style={{fontSize: 40, fontWeight: 'bold'}}> Dinner: RM{three}</Text>
-              <Text style={{fontSize: 40, fontWeight: 'bold'}}> Others: RM{four}</Text>
+    <View style={{ padding: 25 }} />
+
+              <Text style={{padding: 10, fontSize: 40, fontWeight: 'bold', color: '#f9bc2e'}}> Breakfast</Text>
+              <Text style={{paddingBottom: 15 ,fontSize: 30, fontWeight: 'bold'}}>RM{one}</Text>
+              <Text style={{padding: 10,fontSize: 40, fontWeight: 'bold', color: '#4da6bb'}}> Lunch</Text>
+              <Text style={{paddingBottom: 15 ,fontSize: 30, fontWeight: 'bold'}}>RM{two}</Text>
+              <Text style={{padding: 10,fontSize: 40, fontWeight: 'bold', color: '#bae67e'}}> Dinner </Text>
+             <Text style={{paddingBottom: 15 ,fontSize: 30, fontWeight: 'bold'}}> RM{three}</Text>
+              <Text style={{padding: 10,fontSize: 40, fontWeight: 'bold', color: '#f44259'}}> Others</Text>
+              <Text style={{paddingBottom: 15 ,fontSize: 30, fontWeight: 'bold'}}>RM{four}</Text>
 
       <View style={{ flexDirection: 'row'}}>
       

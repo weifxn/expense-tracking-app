@@ -46,7 +46,7 @@ export default class History extends React.Component {
 
   renderList = ({ item, index }) => (
     <View style={{paddingTop: 20}}>
-    <Text>Sept {item[4]}</Text>
+    <Text style={{fontSize: 20, padding: 2}}>September {item[4]}</Text>
     <TouchableOpacity
       onPress={()=>this.onPressBar(index)}
     >
