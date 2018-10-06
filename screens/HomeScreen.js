@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isfifia').then(itemsJSON => {
+    AsyncStorage.getItem('isFinitdddee').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -94,17 +94,44 @@ export default class HomeScreen extends React.Component {
         })
       }
     })
+    if(this.state.isStart) {
+      const forLength = this.state.data
+      const _monthAllow = this.state.data[forLength.length - 1] 
+      const _dated = this.state.data[forLength.length - 2]
+      const _dayTotal = this.state.data[forLength.length - 3] 
+      const _dayLeft = this.state.data[forLength.length - 4] 
+      const _todayData = [this.state.data[0]]
+      this.setState({
+        monthAllow: _monthAllow,
+        date: _dated,
+        dayTotal: _dayTotal,
+        leftDays: 24,
+        dayLeft: 5,
+        todayData: [48.3,97.3,97,68]
+      })
+    }
   }
 
+  // for saving 
   save = item => {
-    AsyncStorage.setItem('isfifi', JSON.stringify(item));
+    AsyncStorage.setItem('isFinitdddee', JSON.stringify(item));
   };
+
+  // sort [todayData, dayLeft, dayTotal,dayofmonth,allowance]
+  appendSave = item => {
+    const arr = [item, ...this.state.data]
+    this.save(arr)
+  }
+
+  saveRef = (one, two, three) => {
+    const arr = [...this.state.data, one, two, three]
+    this.save(arr)
+  }
+
 
   setIsFirst = () => {
     this.setState({
       isFirst: false,
-      dayTotal: this.props.navigation.getParam('dayTotal'),
-      dayLeft: this.props.navigation.getParam('dayTotal'),
       todayData: [90,90,90,90]
     })
   }
@@ -150,6 +177,10 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  onPressHistory = () => {
+    this.props.navigation.navigate('History')
+  }
+
 
   onChangeAllowance = num => {
     this.setState({
@@ -183,23 +214,34 @@ export default class HomeScreen extends React.Component {
     var left = this.state.dayLeft
     var total = this.state.dayTotal
     var perc = (amt/total) * 360
-    const amtLeft = left - amt
+    const amtLeft = parseFloat(left - amt).toFixed(2)
 
     var now = new Date();
     var maxDate = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate()
     var date = now.getDate();
 
-    const newTodayData = this.state.todayData
-    newTodayData[mealIndex] = perc
+    var newTodayData = this.state.todayData
+    if(mealIndex === 3) {
+      newTodayData[mealIndex] = perc + newTodayData[mealIndex]
+    } else {
+      newTodayData[mealIndex] = perc
+    }
 
+    var left = maxDate - date
 
     this.setState({
         date: date,
+        leftDays: left,
         todayData: newTodayData,
         dayLeft: amtLeft
     })
-    var left = maxDate - date
+
+    this.saveRef(amtLeft, total, date, this.state.monthAllow)
+    this.appendSave(this.state.todayData)
+
+   
     var spent = 1000 / left
+
 
     this.setModalVisible(false)
   }
@@ -218,6 +260,9 @@ export default class HomeScreen extends React.Component {
           two={this.state.todayData[1]}
           three={this.state.todayData[2]}
           four={this.state.todayData[3]}
+          onPress={()=>this.onPressHistory()}
+          days={this.state.leftDays}
+          multiply={parseFloat((this.state.leftDays)*(this.state.dayLeft)).toFixed(2)}
         />
         ) : (
 
@@ -240,12 +285,14 @@ export default class HomeScreen extends React.Component {
               monthLeft={this.props.navigation.getParam('monthLeft')}
               leftDays={this.state.leftDays} 
               dayTotal={this.props.navigation.getParam('dayTotal')}
-              onPressDone={()=>this.setState({
+              onPressDone={()=>{
+                this.setState({
                 isStart: true,
                 dayTotal: this.props.navigation.getParam('dayTotal'),
                 dayLeft: this.props.navigation.getParam('dayTotal'),
                 todayData: [0,0,0,0]
-              })}
+              })
+              }}
             />
 
           )}
@@ -262,7 +309,7 @@ export default class HomeScreen extends React.Component {
             isSpent={this.state.isSpent}
             setIsSpent={() => this.setState({ isSpent: !this.state.isSpent})}
             onPressCancel={() => this.setModalVisible(false)}
-           
+            
             onPressDone={()=>this.showDate()}
 
 

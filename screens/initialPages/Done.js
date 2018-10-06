@@ -26,7 +26,7 @@ export default class Done extends React.Component {
         </Text>
         <Text style={{ fontSize: 40, fontWeight: 'bold' }}>↓</Text>
         <Text style={{ fontSize: 70, fontWeight: 'bold' }}>
-          RM{this.props.dayTotal}
+          RM{parseFloat(this.props.dayTotal).toFixed(2)}
         </Text>
         <Text style={{ fontSize: 40, fontWeight: 'bold' }}>
           to spend in a day
