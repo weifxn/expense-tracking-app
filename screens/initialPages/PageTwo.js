@@ -31,7 +31,7 @@ export default class pageTwo extends React.Component {
   render() {
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+    <View style={{ flexDirection: 'column', alignItems: 'center'}}>
       <Text style={{fontSize: 40, fontWeight: 'bold'}}> RM{this.state.monthAllow} </Text>
       <Text style={{fontSize: 40, fontWeight: 'bold'}}> how much you have left? </Text>
       <Text style={{fontSize: 40, fontWeight: 'bold'}}> (including in wallet) </Text>

@@ -25,28 +25,28 @@ export default class ProgressBar extends React.Component {
 const styles = StyleSheet.create({
   progressbar: {
     position: 'relative',
-    height: 22,
+    height: 32,
     width: 362,
     borderWidth: 1
   },
   filler: {
     position: 'relative',
     backgroundColor: '#f9bc2e',
-    height: 20
+    height: 30
   },
   fillerTwo: {
     position: 'relative',
     backgroundColor: '#4da6bb',
-    height: 20
+    height: 30
   },
   fillerThree: {
     position: 'relative',
     backgroundColor: '#bae67e',
-    height: 20
+    height: 30
   },
   fillerFour: {
     position: 'relative',
     backgroundColor: '#f44259',
-    height: 20
+    height: 30
   },
 });

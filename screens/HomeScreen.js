@@ -18,9 +18,12 @@ import MainModal from '../components/MainModal';
 import ProgressBar from '../components/ProgressBar';
 import InitialRun from './initialPages/InitialRun';
 import Done from './initialPages/Done';
+import Main from './homePages/Main'
 import styles from '../styles/Styles'
 
 import Moment from 'react-moment';
+
+const cat = ['breakfast', 'lunch', 'dinner', 'other']
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -34,38 +37,55 @@ export default class HomeScreen extends React.Component {
     date: null,
     maxDate: null,
 
+    isStart: true,
     isFirst: false,
+
     amount: null,
+    desc: '',
 
     data: [],
 
-    todayData: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-      other: null
-    },
+    todayData: [],
 
     monthAllow: null,
+    
+    leftDays: null,
+
     dayTotal: null,
-    leftDays: null
+    dayLeft: null,
+
+    isMeal: '',
+    defaultMealIndex: null
   }
 
   componentDidMount = () => {
     var now = new Date();
     var _date = now.getDate();
+    var hour = now.getHours();
     var maxDays = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
     var _leftDays = maxDays - _date
+    
+
+    var mealIndex = 2
+    if(hour < 12) {
+      mealIndex = 0
+    }
+    else if (hour < 16) {
+      mealIndex = 1
+    }
 
     this.setState({
       date: _date,
-      leftDays: _leftDays
+      leftDays: _leftDays,
+      isMeal: cat[mealIndex],
+      defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isFir').then(itemsJSON => {
+    AsyncStorage.getItem('isfifia').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
-          isFirst: true
+          isFirst: true,
+          isStart: false
         })
       } else {
         this.setState({
@@ -77,19 +97,15 @@ export default class HomeScreen extends React.Component {
   }
 
   save = item => {
-    AsyncStorage.setItem('isFirs', JSON.stringify(item));
+    AsyncStorage.setItem('isfifi', JSON.stringify(item));
   };
 
   setIsFirst = () => {
     this.setState({
       isFirst: false,
       dayTotal: this.props.navigation.getParam('dayTotal'),
-      todayData: {
-        breakfast: 90,
-        lunch: 90,
-        dinner: 90,
-        other: 90
-      },
+      dayLeft: this.props.navigation.getParam('dayTotal'),
+      todayData: [90,90,90,90]
     })
   }
 
@@ -102,24 +118,24 @@ export default class HomeScreen extends React.Component {
     })
   }
 
-  showDate = () => {
-    var now = new Date();
-    
-    var maxDate = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate()
-    var date = now.getDate();
-    this.setState({
-      date: date
-    })
-    var left = maxDate - date
-    var spent = 1000 / left
-    
-    Alert.alert(spent + '.' + this.state.amount)
-  }
+  
 
   changeAmount = (num) => {
     this.setState({
       amount: num
     })
+  }
+
+  changeDesc = text => {
+    if(text !== '') {
+      this.setState({
+        desc: text
+      })
+    } else {
+      this.setState({
+        desc: this.state.isMeal
+      })
+    }
   }
 
 
@@ -144,12 +160,68 @@ export default class HomeScreen extends React.Component {
   }
 
 
+  showDate = () => {
+    var mealIndex = 0
+    if(this.state.desc === "breakfast") {
+      mealIndex = 0
+    }
+    else if (this.state.desc === "lunch") {
+      mealIndex = 1
+    }
+    else if (this.state.desc === "dinner") {
+      mealIndex = 2
+    }
+    else if (this.state.desc === "") {
+      mealIndex = this.state.defaultMealIndex
+    }
+    else {
+      mealIndex = 3
+    }
+  
+
+    var amt = this.state.amount
+    var left = this.state.dayLeft
+    var total = this.state.dayTotal
+    var perc = (amt/total) * 360
+    const amtLeft = left - amt
+
+    var now = new Date();
+    var maxDate = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate()
+    var date = now.getDate();
+
+    const newTodayData = this.state.todayData
+    newTodayData[mealIndex] = perc
+
+
+    this.setState({
+        date: date,
+        todayData: newTodayData,
+        dayLeft: amtLeft
+    })
+    var left = maxDate - date
+    var spent = 1000 / left
+
+    this.setModalVisible(false)
+  }
+
+
   render() {
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
     return (
       <View style={styles.container}>
-      <View>
+      {this.state.isStart ? (
+        <Main 
+          howMuch={this.state.dayLeft}
+          onPressDone={()=>this.setModalVisible(true)}
+          one={this.state.todayData[0]}
+          two={this.state.todayData[1]}
+          three={this.state.todayData[2]}
+          four={this.state.todayData[3]}
+        />
+        ) : (
+
+        <View>
           
           {this.state.isFirst ? (
             <View>
@@ -161,23 +233,27 @@ export default class HomeScreen extends React.Component {
             ) : (
 
             <Done
-              one={this.state.todayData.breakfast}
-              two={this.state.todayData.lunch}
-              three={this.state.todayData.dinner}
-              four={this.state.todayData.other}
+              one={this.state.todayData[0]}
+              two={this.state.todayData[1]}
+              three={this.state.todayData[2]}
+              four={this.state.todayData[3]}
               monthLeft={this.props.navigation.getParam('monthLeft')}
               leftDays={this.state.leftDays} 
               dayTotal={this.props.navigation.getParam('dayTotal')}
+              onPressDone={()=>this.setState({
+                isStart: true,
+                dayTotal: this.props.navigation.getParam('dayTotal'),
+                dayLeft: this.props.navigation.getParam('dayTotal'),
+                todayData: [0,0,0,0]
+              })}
             />
 
           )}
 
         </View>
-            
-            
-          
 
-          
+        )}
+            
 
           <MainModal
             isVisible={this.state.modalVisible}
@@ -186,10 +262,15 @@ export default class HomeScreen extends React.Component {
             isSpent={this.state.isSpent}
             setIsSpent={() => this.setState({ isSpent: !this.state.isSpent})}
             onPressCancel={() => this.setModalVisible(false)}
-            moneyOnChangeText={this.changeAmount}
+           
             onPressDone={()=>this.showDate()}
-            descValue="dinner"
+
+
+            descValue={this.state.isMeal}
+            descOnChangeText={this.changeDesc}
+
             moneyValue={this.state.amount}
+            moneyOnChangeText={this.changeAmount}
 
           />
       </View>

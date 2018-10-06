@@ -58,6 +58,7 @@ export default class MainModal extends React.Component {
                 value={this.props.descValue}
                 clearTextOnFocus={true}
                 autoCapitalize = 'none'
+                onChangeText={this.props.descOnChangeText}
               />
 
             </View>

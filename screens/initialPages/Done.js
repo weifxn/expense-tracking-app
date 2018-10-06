@@ -59,6 +59,7 @@ export default class Done extends React.Component {
         <CardButton
           name="Let's get started"
           style={styles.cardButton}
+          onPress={this.props.onPressDone}
         />
         <View style={{ padding: 20 }} />
         </View>
