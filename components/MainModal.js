@@ -12,6 +12,7 @@ import CardButton from './CardButton'
 import styles from '../styles/Styles'
 
 export default class MainModal extends React.Component {
+  
 
   render() {
     return (
@@ -30,12 +31,12 @@ export default class MainModal extends React.Component {
           <CardButton
             name="Transfer"
             style={styles.cardButtonSmall}
-            onPress={this.props.onPressCancel}
+            onPress={this.props.onPressTransfer}
           />
           <CardButton
             name="Widthdraw"
             style={styles.cardButtonSmall}
-            onPress={this.props.onPressDone}
+            onPress={this.props.onPressWithdraw}
           />
           </View>
           <View style={styles.card}> 

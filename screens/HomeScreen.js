@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isFinishw').then(itemsJSON => {
+    AsyncStorage.getItem('isFinish').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -179,6 +179,15 @@ export default class HomeScreen extends React.Component {
 
   onPressHistory = () => {
     this.props.navigation.navigate('History')
+  }
+
+  onPressTransfer = () => {
+    this.props.navigation.navigate('Transfer')
+    this.setModalVisible(false)
+  }
+  onPressWithdraw = () => {
+    this.props.navigation.navigate('Withdraw')
+    this.setModalVisible(false)
   }
 
 
@@ -318,6 +327,9 @@ export default class HomeScreen extends React.Component {
 
             moneyValue={this.state.amount}
             moneyOnChangeText={this.changeAmount}
+
+            onPressTransfer={()=>this.onPressTransfer()}
+            onPressWithdraw={()=>this.onPressWithdraw()}
 
           />
       </View>

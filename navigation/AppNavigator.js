@@ -5,6 +5,8 @@ import two from '../screens/initialPages/PageTwo';
 import three from '../screens/initialPages/PageThree';
 import history from '../screens/homePages/History'
 import dhistory from '../screens/homePages/DetailHistory'
+import withdraw from '../screens/transaction/Withdraw'
+import transfer from '../screens/transaction/Transfer'
 import { createStackNavigator } from 'react-navigation';
 
 const RootStack = createStackNavigator(
@@ -13,7 +15,10 @@ const RootStack = createStackNavigator(
     Two: two,
     Three: three,
     History: history,
-    DHistory: dhistory
+    DHistory: dhistory,
+    Withdraw: withdraw,
+    Transfer: transfer
+
   },
   {
     initialRouteName: 'Main',
