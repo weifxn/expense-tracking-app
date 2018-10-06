@@ -17,6 +17,7 @@ import { MonoText } from '../components/StyledText';
 import MainModal from '../components/MainModal';
 import ProgressBar from '../components/ProgressBar';
 import InitialRun from './initialPages/InitialRun';
+import Done from './initialPages/Done';
 import styles from '../styles/Styles'
 
 import Moment from 'react-moment';
@@ -43,20 +44,25 @@ export default class HomeScreen extends React.Component {
       lunch: null,
       dinner: null,
       other: null
-    }
+    },
+
+    monthAllow: null,
+    dayTotal: null,
+    leftDays: null
   }
 
   componentDidMount = () => {
     var now = new Date();
     var _date = now.getDate();
-    var _maxDate = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+    var maxDays = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+    var _leftDays = maxDays - _date
 
     this.setState({
       date: _date,
-      maxData: _maxDate
+      leftDays: _leftDays
     })
 
-    AsyncStorage.getItem('isFirst').then(itemsJSON => {
+    AsyncStorage.getItem('isFir').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true
@@ -68,8 +74,23 @@ export default class HomeScreen extends React.Component {
         })
       }
     })
+  }
 
+  save = item => {
+    AsyncStorage.setItem('isFirs', JSON.stringify(item));
+  };
 
+  setIsFirst = () => {
+    this.setState({
+      isFirst: false,
+      dayTotal: this.props.navigation.getParam('dayTotal'),
+      todayData: {
+        breakfast: 90,
+        lunch: 90,
+        dinner: 90,
+        other: 90
+      },
+    })
   }
 
   setModalVisible(visible) {
@@ -102,6 +123,27 @@ export default class HomeScreen extends React.Component {
   }
 
 
+  // initial part
+  onDoneAllowance = () => {
+    if(this.state.monthAllow !== null) {
+      this.props.navigation.navigate('Two', {
+        monthAllow: this.state.monthAllow,
+        leftDays: this.state.leftDays,
+        setIsFirst: this.setIsFirst
+      });
+    }
+  }
+
+
+  onChangeAllowance = num => {
+    this.setState({
+      monthAllow: num
+    })
+    const arr = [num]
+    this.save(arr)
+  }
+
+
   render() {
     var month = new Date().getMonth() + 1;
     var year = new Date().getFullYear();
@@ -111,19 +153,22 @@ export default class HomeScreen extends React.Component {
           
           {this.state.isFirst ? (
             <View>
-            <InitialRun />
+            <InitialRun 
+              changeText={this.onChangeAllowance}
+              onPressDone={()=>this.onDoneAllowance()}
+            />
             </View>
             ) : (
-            <View>
-            <Text> HEllo old </Text>
-            <ProgressBar 
+
+            <Done
               one={this.state.todayData.breakfast}
               two={this.state.todayData.lunch}
               three={this.state.todayData.dinner}
               four={this.state.todayData.other}
+              monthLeft={this.props.navigation.getParam('monthLeft')}
+              leftDays={this.state.leftDays} 
+              dayTotal={this.props.navigation.getParam('dayTotal')}
             />
-
-            </View>
 
           )}
 

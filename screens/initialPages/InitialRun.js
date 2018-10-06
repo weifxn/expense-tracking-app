@@ -11,13 +11,12 @@ export default class initialRun extends React.Component {
     return (
    	<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-      <Text style={{fontSize: 40, fontWeight: 'bold'}}> enter monthly allowance </Text>
+      <Text style={{fontSize: 40, fontWeight: 'bold'}}> enter your allowance </Text>
       <CardInput
       	placeholder="0.00"
       	style={styles.mainModalFontInput}
       	autoFocus={true}
       	keyboardType='decimal-pad'
-      	value={this.props.value}
       	changeText={this.props.changeText}
       />
       <CardButton

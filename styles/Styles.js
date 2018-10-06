@@ -43,7 +43,7 @@ export default StyleSheet.create({
     color: '#fff'
   },
   cardButton: {
-    backgroundColor: '#4b49b2',
+    backgroundColor: 'black',
     margin: 6,
     width: width - 50,
     borderRadius: 13,

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   progressbar: {
     position: 'relative',
     height: 22,
-    width: 350,
+    width: 362,
     borderWidth: 1
   },
   filler: {

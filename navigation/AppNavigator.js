@@ -8,8 +8,8 @@ import { createStackNavigator } from 'react-navigation';
 const RootStack = createStackNavigator(
   {
     Main: main,
-    PageTwo: two,
-    PageThree: three,
+    Two: two,
+    Three: three,
   },
   {
     initialRouteName: 'Main',
