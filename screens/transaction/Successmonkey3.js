@@ -8,6 +8,7 @@ export default class LotsOfStyles extends Component {
     header: null,
   };
   onAdd = () => {this.props.navigation.navigate('Add2');}
+  onAddMain = () => {this.props.navigation.navigate('Main');}
 
   render() {
     
@@ -24,14 +25,24 @@ export default class LotsOfStyles extends Component {
         digitTxtColor='white'
         timeToShow={['M', 'S']}
       />
-      <CardButton
+      
+
+</View>
+          <View style={{ flexDirection: 'row' }}>
+          <CardButton
+              name="Cancel"
+              style={styles.cardButtonSmallDelete}
+              onPress={this.onAddMain}
+              
+            />
+          <CardButton
               name="Done"
               style={styles.cardButtonSmall}
               onPress={this.onAdd}
               
             />
-
-</View>
+            </View>
+            
       </View>
     );
   }

@@ -11,14 +11,15 @@ export default class DisplayAnImage extends Component {
 onAdd = () => {this.props.navigation.navigate('Main');}
   render() {
     return (
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', alignItems: 'center' }}>
+      <View style={{ padding: 50 }} />
         <Image
-          style={{ width: 200, height: 50,paddingTop:350,paddingLeft:350}}
+          style={{ width: 70, height: 50,paddingTop:350,paddingLeft:350}}
           source={{
             uri: 'https://png.pngtree.com/svg/20161227/a_completed_1323890.png',
           }}
         />
-        <Text style={styles.appTitle}>Withdrawal Success!</Text>
+        <Text style={{fontSize: 30, textAlign: 'center'}}>Withdrawal Success!</Text>
         <CardButton
               name="OK"
               style={[styles.withdrawalOK,styles.cardButton]}

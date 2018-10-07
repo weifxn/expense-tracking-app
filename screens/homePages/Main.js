@@ -152,9 +152,13 @@ export default class Main extends React.Component {
       />
      
 
-      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
         Restaurant Yut Kee
+        </Text>
+        <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 15}}> 
+        RM7.99 meal
       </Text>
+      
        <CardButton
             name="Directions"
             style={styles.cardButtonSmall}
@@ -174,8 +178,11 @@ export default class Main extends React.Component {
       />
      
 
-      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
         Sai Kee Coffee
+      </Text>
+      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 15}}> 
+        RM10.99 with free drink 
       </Text>
        <CardButton
             name="Directions"
@@ -195,8 +202,11 @@ export default class Main extends React.Component {
       />
      
 
-      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
         Noodle Descendents
+      </Text>
+      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 15}}> 
+        RM9.99 set meal
       </Text>
        <CardButton
             name="Directions"

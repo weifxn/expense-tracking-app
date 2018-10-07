@@ -24,7 +24,7 @@ import styles from '../styles/Styles'
 import Moment from 'react-moment';
 
 const cat = ['breakfast', 'lunch', 'dinner', 'other']
-var mealIndex = 0
+var mealIndex = 2
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -66,9 +66,7 @@ export default class HomeScreen extends React.Component {
     var maxDays = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
     var _leftDays = maxDays - _date
     
-
-    var mealIndex = 2
-    if(hour < 12) {
+    if(hour < 11) {
       mealIndex = 0
     }
     else if (hour < 16) {
@@ -82,7 +80,7 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isFinishaata').then(itemsJSON => {
+    AsyncStorage.getItem('allReadyOK').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -103,7 +101,7 @@ export default class HomeScreen extends React.Component {
 
   // for saving 
   save = item => {
-    AsyncStorage.setItem('isFinishaat', JSON.stringify(item));
+    AsyncStorage.setItem('allReadyOK', JSON.stringify(item));
   };
 
   // sort [todayData, dayLeft, dayTotal,dayofmonth,allowance]
@@ -143,21 +141,7 @@ export default class HomeScreen extends React.Component {
   }
 
   changeDesc = text => {
-    if(text === "breakfast") {
-      mealIndex = 0
-    }
-    else if (text === "lunch") {
-      mealIndex = 1
-    }
-    else if (text === "dinner") {
-      mealIndex = 2
-    }
-    else if (text === "") {
-      mealIndex = this.state.defaultMealIndex
-    }
-    else {
-      mealIndex = 3
-    }
+
     if(text !== '') {
       this.setState({
         desc: text
@@ -206,18 +190,31 @@ export default class HomeScreen extends React.Component {
 
   showDate = () => {
     
-    
+    if(this.state.desc === "breakfast") {
+      mealIndex = 0
+    }
+    else if (this.state.desc === "lunch") {
+      mealIndex = 1
+    }
+    else if (this.state.desc === "dinner") {
+      mealIndex = 2
+    }
+    else if (this.state.desc === "") {
+      mealIndex = this.state.defaultMealIndex
+    }
+    else {
+      mealIndex = 3
+    }
   
 
     var amt = this.state.amount
     var left = this.state.dayLeft
     var total = this.state.dayTotal
-    var perc = 0
-    var amtLeft = left
-    if (left > amt) {
-      amtLeft = parseFloat(left - amt).toFixed(2)
-      perc = (amt/total) * 360
-    }
+    var perc = (amt/total) * 360
+    
+    var amtLeft = parseFloat(left - amt).toFixed(2)
+      
+    
     var now = new Date();
     var maxDate = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate()
     var date = now.getDate();
