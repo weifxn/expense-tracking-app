@@ -24,6 +24,7 @@ import styles from '../styles/Styles'
 import Moment from 'react-moment';
 
 const cat = ['breakfast', 'lunch', 'dinner', 'other']
+var mealIndex = 0
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -81,7 +82,7 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isFinish').then(itemsJSON => {
+    AsyncStorage.getItem('isFinishaat').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -90,31 +91,19 @@ export default class HomeScreen extends React.Component {
       } else {
         this.setState({
           data: JSON.parse(itemsJSON),
-          modalVisible: true
+          modalVisible: true,
+          dayTotal: 50,
+          leftDays: 24,
+          dayLeft: 25.5,
+          todayData: [57.6,79.2,0,39.6]
         })
       }
     })
-    if(this.state.isStart) {
-      const forLength = this.state.data
-      const _monthAllow = this.state.data[forLength.length - 1] 
-      const _dated = this.state.data[forLength.length - 2]
-      const _dayTotal = this.state.data[forLength.length - 3] 
-      const _dayLeft = this.state.data[forLength.length - 4] 
-      const _todayData = [this.state.data[0]]
-      this.setState({
-        monthAllow: _monthAllow,
-        date: _dated,
-        dayTotal: _dayTotal,
-        leftDays: 24,
-        dayLeft: 5,
-        todayData: [48.3,97.3,97,68]
-      })
-    }
   }
 
   // for saving 
   save = item => {
-    AsyncStorage.setItem('isFinitdddee', JSON.stringify(item));
+    AsyncStorage.setItem('isFinishaat', JSON.stringify(item));
   };
 
   // sort [todayData, dayLeft, dayTotal,dayofmonth,allowance]
@@ -154,6 +143,21 @@ export default class HomeScreen extends React.Component {
   }
 
   changeDesc = text => {
+    if(text === "breakfast") {
+      mealIndex = 0
+    }
+    else if (text === "lunch") {
+      mealIndex = 1
+    }
+    else if (text === "dinner") {
+      mealIndex = 2
+    }
+    else if (text === "") {
+      mealIndex = this.state.defaultMealIndex
+    }
+    else {
+      mealIndex = 3
+    }
     if(text !== '') {
       this.setState({
         desc: text
@@ -201,22 +205,8 @@ export default class HomeScreen extends React.Component {
 
 
   showDate = () => {
-    var mealIndex = 0
-    if(this.state.desc === "breakfast") {
-      mealIndex = 0
-    }
-    else if (this.state.desc === "lunch") {
-      mealIndex = 1
-    }
-    else if (this.state.desc === "dinner") {
-      mealIndex = 2
-    }
-    else if (this.state.desc === "") {
-      mealIndex = this.state.defaultMealIndex
-    }
-    else {
-      mealIndex = 3
-    }
+    
+    
   
 
     var amt = this.state.amount
@@ -242,7 +232,8 @@ export default class HomeScreen extends React.Component {
         date: date,
         leftDays: left,
         todayData: newTodayData,
-        dayLeft: amtLeft
+        dayLeft: amtLeft,
+        amount: null
     })
 
     this.saveRef(amtLeft, total, date, this.state.monthAllow)
@@ -271,7 +262,9 @@ export default class HomeScreen extends React.Component {
           four={this.state.todayData[3]}
           onPress={()=>this.onPressHistory()}
           days={this.state.leftDays}
-          multiply={parseFloat((this.state.leftDays)*(this.state.dayLeft)).toFixed(2)}
+          multiplyNew={parseFloat((this.state.leftDays)*(this.state.dayLeft)).toFixed(2)}
+
+          multiply={parseFloat(((this.state.leftDays)-10)*(this.state.dayLeft)).toFixed(2)}
         />
         ) : (
 

@@ -17,7 +17,7 @@ export default class Withdraw extends React.Component {
   };
 
   onAdd = () => {
-    this.props.navigation.navigate('Transfer');
+    this.props.navigation.navigate('UserMain');
   };
   changeChecked =()=> {
      this.setState({ 
@@ -31,7 +31,7 @@ export default class Withdraw extends React.Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <View>
-          <CardInput style={styles.input} placeholder="Enter Amount" kt='numeric'/>
+          <CardInput cardStyle={styles.card} style={styles.input} placeholder="Enter Amount" keyboardType='numeric'/>
           
           <View>
           <CheckBox
@@ -55,10 +55,12 @@ export default class Withdraw extends React.Component {
         
 
         <View style ={styles.tabBar}>
-          <CardButton name="Cancel" style={styles.cardButton} />
-          <View />
-          <CardButton func={this.onAdd} name="Confirm" style={styles.cardButton} />
-          <View />
+        <View style={{ flexDirection: 'row'}}>
+                  <CardButton name="Cancel"  onPress = {()=> this.props.navigation.navigate('Main')} style={styles.cardButtonSmallDelete} />
+
+        <CardButton onPress={()=>this.onAdd()} name="Confirm" style={styles.cardButtonSmall} />
+        
+          </View>
         </View>
       </View>
       </TouchableWithoutFeedback>

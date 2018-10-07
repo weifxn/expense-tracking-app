@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Button,
-  Modal,
   Text,
   TouchableHighlight,
   View,
@@ -16,7 +15,7 @@ import CardButton from '../../components/CardButton';
 import CardInput from '../../components/CardInput';
 import { CheckBox } from 'react-native-elements';
 import { Component } from 'react';
-
+import Modal from 'react-native-modal';
 
 
 export default class Transfer extends React.Component {
@@ -37,7 +36,7 @@ export default class Transfer extends React.Component {
     valuepayment: '',
   };
 onAdd = () => {
-    this.props.navigation.navigate('Amount');
+    this.props.navigation.navigate('UserMain1');
   };
 
   changeChecked = () => {
@@ -60,7 +59,10 @@ onAdd = () => {
 
   onPressOtherBank = () => {
     this.setModalVisible(true);
-    this.changeChecked();
+    this.setState({
+      checkedOne: false,
+      checkedTwo: true,
+    });
   };
   setModalPaymentType(visible) {
     this.setState({ paymentVisible: visible });
@@ -77,7 +79,7 @@ onAdd = () => {
         <View style={styles.container}>
           <View>
             <CardInput
-            kt='numeric'
+              keyboardType='numeric'
               style={styles.input}
               placeholder="Enter Account Number"
             />
@@ -96,14 +98,14 @@ onAdd = () => {
                 checked={this.state.checkedTwo}
                 onPress={() => this.onPressOtherBank()}
               />
-              <View style={{ marginTop: 22 }}>
+              <Text style={styles.input}>{this.state.value}</Text>
+              <View style={{ marginTop: 5 }}>
                 <Modal
-                  animationType="slide"
-                  transparent={false}
-                  visible={this.state.modalVisible}
-                  onRequestClose={() => {}}>
-                  <View style={{ marginTop: 22 }}>
-                    <View>
+                onBackdropPress={()=> this.setModalVisible(false)}
+
+                  isVisible={this.state.modalVisible}>
+                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                    <View style={styles.card}>
                       <TouchableHighlight
                         onPress={() => {
                           this.setModalVisible(!this.state.modalVisible);
@@ -111,7 +113,7 @@ onAdd = () => {
                             value: 'CIMB',
                           });
                         }}>
-                        <Text>CIMB</Text>
+                        <Text style={{fontSize: 30}}>CIMB</Text>
                       </TouchableHighlight>
                       <TouchableHighlight
                         onPress={() => {
@@ -120,7 +122,7 @@ onAdd = () => {
                             value: 'Maybank',
                           });
                         }}>
-                        <Text>Maybank</Text>
+                        <Text style={{fontSize: 30}}>Maybank</Text>
                       </TouchableHighlight>
                       <TouchableHighlight
                         onPress={() => {
@@ -129,14 +131,14 @@ onAdd = () => {
                             value: 'RHB',
                           });
                         }}>
-                        <Text>RHB</Text>
+                        <Text style={{fontSize: 30}}>RHB</Text>
                       </TouchableHighlight>
                     </View>
                   </View>
                 </Modal>
               </View>
             </View>
-            <CardInput kt='numeric' style={styles.input} placeholder="Enter Amount" />
+            <CardInput keyboardType='numeric' style={styles.input} placeholder="Enter Amount" />
             <CheckBox
               title="Normal Transfer"
               checkedIcon="dot-circle-o"
@@ -157,12 +159,10 @@ onAdd = () => {
               </View>
             </TouchableHighlight>
             <Modal
-              animationType="slide"
-              transparent={false}
-              visible={this.state.paymentVisible}
-              onRequestClose={() => {}}>
-              <View style={{ marginTop: 22 }}>
-                <View>
+              onBackdropPress={()=>this.setModalPaymentType(false)}
+              isVisible={this.state.paymentVisible}>
+                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <View style={styles.card}>
                   <TouchableHighlight
                     onPress={() => {
                       this.setModalPaymentType(!this.state.paymentVisible);
@@ -170,7 +170,7 @@ onAdd = () => {
                         valuepayment: 'Fund Transfer',
                       });
                     }}>
-                    <Text>Fund Transfer</Text>
+                    <Text style={{fontSize: 30}}>Fund Transfer</Text>
                   </TouchableHighlight>
                   <TouchableHighlight
                     onPress={() => {
@@ -179,7 +179,7 @@ onAdd = () => {
                         valuepayment: 'Loan',
                       });
                     }}>
-                    <Text>Loan</Text>
+                    <Text style={{fontSize: 30}}>Loan</Text>
                   </TouchableHighlight>
                 </View>
               </View>
@@ -189,12 +189,17 @@ onAdd = () => {
             </View>
           </View>
           <View style={styles.tabBar}>
-            <CardButton 
+<View style={{ flexDirection: 'row'}}>
+<CardButton 
               name="Cancel" 
               style={styles.cardButton} 
+              onPress = {()=> this.props.navigation.navigate('Main')}
             />
+                  <CardButton onPress = {this.onAdd}name="Confirm" style={styles.cardButton} />
+
+            
+            </View>
             <View />
-            <CardButton func = {this.onAdd}name="Confirm" style={styles.cardButton} />
             <View />
           </View>
         </View>

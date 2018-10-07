@@ -10,7 +10,7 @@ import ProgressBar from '../../components/ProgressBar';
 export default class Main extends React.Component {
   render() {
     return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
     <View style={{ padding: 20 }} />
     
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
@@ -49,20 +49,70 @@ export default class Main extends React.Component {
 <Image 
      style={{width: 30, height: 30}}
           source={{uri: 'https://static.thenounproject.com/png/10897-200.png'}}
-       
-
     />
+    {this.props.three ? (
+      <View>
 
-    <Text style={{textAlign:'center', paddingTop: 50, paddingBottom: 40,fontSize: 40, fontWeight: 'bold'}}> 
-    Here are some calculations
+       <Text style={{textAlign:'center', paddingTop: 50, paddingBottom: 40,fontSize: 40, fontWeight: 'bold'}}> 
+    
     </Text>
-    <Text style={{textAlign:'center', paddingTop: 30, paddingBottom: 1, fontSize: 30, fontWeight: 'bold'}}> 
-    if you save  
+    <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
+      🎉🎉🎉
+      </Text>
+    <Text style={{color:'grey' ,textAlign:'center', paddingTop: 1, paddingBottom: 1, fontSize: 30, fontWeight: 'bold'}}> 
+   Congratulations on saving
+    </Text>
+      <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 60, fontWeight: 'bold'}}> 
+     RM{(this.props.howMuch)} 
+      </Text>
+      <Text style={{color:'grey' ,textAlign:'center', paddingTop: 1, paddingBottom: 50, fontSize: 30, fontWeight: 'bold'}}> 
+      today! 
+    </Text>
+    <Text style={{color:'grey' ,textAlign:'center', paddingTop: 50, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
+      You'll just have to
+    </Text>
+      
+    <Text style={{color:'grey' ,textAlign:'center', paddingTop: 1, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+    stay consistent for another
     </Text>
       <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
-     RM{this.props.howMuch} 
+
+  {this.props.days} days
+
+  </Text>
+  <Text style={{color:'grey' , textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+    and you will have an extra of
+    </Text>
+  <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
+
+  RM{this.props.multiplyNew}
+
+  </Text>
+  <Text style={{color:'grey' , textAlign:'center', paddingTop: 10, paddingBottom: 120,fontSize: 30, fontWeight: 'bold'}}> 
+    by the end of this month!
+    </Text>
+
+    </View>
+
+      ):(
+      <View>
+
+       <Text style={{textAlign:'center', paddingTop: 50, paddingBottom: 40,fontSize: 40, fontWeight: 'bold'}}> 
+    Here are some calculations
+    </Text>
+    <Text style={{color:'grey' ,textAlign:'center', paddingTop: 30, paddingBottom: 1, fontSize: 30, fontWeight: 'bold'}}> 
+    if you spend only 
+    </Text>
+      <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
+     RM10
       </Text>
-    <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+      <Text style={{color:'grey' ,textAlign:'center', paddingTop: 30, paddingBottom: 1, fontSize: 30, fontWeight: 'bold'}}> 
+      on dinner and save
+    </Text>
+      <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
+     RM{(this.props.howMuch) - 10} 
+      </Text>
+    <Text style={{color:'grey' ,textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
     for the rest of the 
     </Text>
       <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
@@ -70,23 +120,20 @@ export default class Main extends React.Component {
   {this.props.days} days
 
   </Text>
-  <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
-    you will save
+  <Text style={{color:'grey' , textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 30, fontWeight: 'bold'}}> 
+    you will have an extra of
     </Text>
   <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 10,fontSize: 60, fontWeight: 'bold'}}> 
 
   RM{this.props.multiply}
 
   </Text>
-  <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 120,fontSize: 30, fontWeight: 'bold'}}> 
-    by the end of this month
+  <Text style={{color:'grey' , textAlign:'center', paddingTop: 10, paddingBottom: 120,fontSize: 30, fontWeight: 'bold'}}> 
+    by the end of this month!
     </Text>
 
-    <Text style={{textAlign:'center', paddingTop: 10, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
-    keep scrolling 
-    </Text>
     <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
-    to see some 
+    Let's find some
     </Text>
     <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 120,fontSize: 30, fontWeight: 'bold'}}> 
     cheaper restaurants nearby
@@ -154,6 +201,11 @@ export default class Main extends React.Component {
           />
          </View>
     </View>
+    </View>
+
+      )}
+
+   
 
 
       </View>
