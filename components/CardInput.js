@@ -15,6 +15,7 @@ export default class CardInput extends React.Component {
               multiline={this.props.multiline}
               keyboardType={this.props.keyboardType}
               autoFocus={this.props.autoFocus}
+              secureTextEntry={this.props.secure}
             />
         </View>
     );

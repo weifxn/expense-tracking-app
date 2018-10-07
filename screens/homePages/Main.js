@@ -135,8 +135,11 @@ export default class Main extends React.Component {
     <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
     Let's find some
     </Text>
-    <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 120,fontSize: 30, fontWeight: 'bold'}}> 
+    <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 1,fontSize: 30, fontWeight: 'bold'}}> 
     cheaper restaurants nearby
+    </Text>
+    <Text style={{textAlign:'center', paddingTop: 1, paddingBottom: 120,fontSize: 30, fontWeight: 'bold'}}> 
+    for dinner later!
     </Text>
 
     <View style={styles.card}>

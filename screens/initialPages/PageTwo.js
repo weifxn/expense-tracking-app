@@ -35,22 +35,23 @@ export default class pageTwo extends React.Component {
     return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={{ flexDirection: 'column', alignItems: 'center'}}>
-       <View style={{ padding: 130 }} />
+       <View style={{ padding: 100 }} />
 
-      <Text style={{fontSize: 40, fontWeight: 'bold'}}> RM{this.state.monthAllow} </Text>
-      <Text style={{fontSize: 40, fontWeight: 'bold'}}> how much you have left? </Text>
+      <Text style={{padding: 20, textAlign:'center', fontSize: 40, fontWeight: 'bold'}}> How much you have left? </Text>
       <CardInput
-        placeholder="0.00"
+        placeholder="RM0.00"
         style={styles.mainModalFontInput}
         autoFocus={true}
         keyboardType='decimal-pad'
         changeText={this.changeText}
       />
+       <View style={{ padding: 15 }} />
       <CardButton
         name="Done"
         style={styles.cardButtonSmall}
         onPress={this.onPressDone}
       />
+       <View style={{ padding: 95 }} />
 
       </View>
      </TouchableWithoutFeedback>

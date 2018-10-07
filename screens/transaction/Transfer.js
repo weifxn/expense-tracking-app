@@ -192,10 +192,10 @@ onAdd = () => {
 <View style={{ flexDirection: 'row'}}>
 <CardButton 
               name="Cancel" 
-              style={styles.cardButton} 
+              style={styles.cardButtonSmallDelete} 
               onPress = {()=> this.props.navigation.navigate('Main')}
             />
-                  <CardButton onPress = {this.onAdd}name="Confirm" style={styles.cardButton} />
+                  <CardButton onPress = {this.onAdd}name="Confirm" style={styles.cardButtonSmall} />
 
             
             </View>

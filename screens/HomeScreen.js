@@ -82,7 +82,7 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     })
 
-    AsyncStorage.getItem('isFinishaat').then(itemsJSON => {
+    AsyncStorage.getItem('isFinishaata').then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -212,9 +212,12 @@ export default class HomeScreen extends React.Component {
     var amt = this.state.amount
     var left = this.state.dayLeft
     var total = this.state.dayTotal
-    var perc = (amt/total) * 360
-    const amtLeft = parseFloat(left - amt).toFixed(2)
-
+    var perc = 0
+    var amtLeft = left
+    if (left > amt) {
+      amtLeft = parseFloat(left - amt).toFixed(2)
+      perc = (amt/total) * 360
+    }
     var now = new Date();
     var maxDate = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate()
     var date = now.getDate();
@@ -226,11 +229,13 @@ export default class HomeScreen extends React.Component {
       newTodayData[mealIndex] = perc
     }
 
-    var left = maxDate - date
+
+
+    var dleft = maxDate - date
 
     this.setState({
         date: date,
-        leftDays: left,
+        leftDays: dleft,
         todayData: newTodayData,
         dayLeft: amtLeft,
         amount: null

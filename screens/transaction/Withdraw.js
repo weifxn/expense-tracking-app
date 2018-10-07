@@ -61,6 +61,7 @@ export default class Withdraw extends React.Component {
         <CardButton onPress={()=>this.onAdd()} name="Confirm" style={styles.cardButtonSmall} />
         
           </View>
+          <View style={{ padding: 60 }} />
         </View>
       </View>
       </TouchableWithoutFeedback>
