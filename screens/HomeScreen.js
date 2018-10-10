@@ -92,18 +92,21 @@ export default class HomeScreen extends React.Component {
         });
       } else {
         var storage = JSON.parse(itemsJSON);
+
         console.log(_leftDays);
         console.log(storage[0].leftDays);
       
         // new day
         if (_leftDays !== storage[0].leftDays) {
-          var forHistory = [...storage[0].todayData, now.getMonth(), _date, storage[0].dayAllowanceTotal]
+          var forHistory = [...storage[0].todayData, now.getMonth() + 1, _date, storage[0].dayAllowanceTotal]
           var historyArr = [forHistory, ...storage[0].history]
-          
+          var _leftDays = storage[0].leftDays
+          var _totalAllowanceLeft = storage[0].totalAllowanceLeft
+          var newDayAllowanceTotal = _totalAllowanceLeft/_leftDays
           this.setState({
             history: historyArr,
             todayData: [0, 0, 0, 0],
-            dayAllowanceTotal: storage[0].dayAllowanceTotal,
+            dayAllowanceTotal: newDayAllowanceTotal,
             dayAllowanceLeft: storage[0].dayAllowanceTotal,
 
             monthAllow: storage[0].totalAllowance,
@@ -247,7 +250,7 @@ export default class HomeScreen extends React.Component {
       newTodayData[mealIndex] = perc + newTodayData[mealIndex];
    
 
-    var monthLeft = this.state.monthAllow - this.state.dayAllowanceTotal;
+    var _monthLeft = this.state.monthAllow - this.state.dayAllowanceTotal;
 
     var dleft = maxDate - date;
 
@@ -256,7 +259,8 @@ export default class HomeScreen extends React.Component {
       leftDays: dleft,
       todayData: newTodayData,
       dayAllowanceLeft: amtLeft,
-      amount: null
+      amount: null,
+      monthLeft: _monthLeft
     });
 
     this.appendSave(this.state.todayData);
@@ -264,7 +268,7 @@ export default class HomeScreen extends React.Component {
     var forStorage = {
       history: this.state.history,
       totalAllowance: this.state.monthAllow,
-      totalAllowanceLeft: monthLeft,
+      totalAllowanceLeft: _monthLeft,
       leftDays: dleft,
       dayAllowanceTotal: total,
       dayAllowanceLeft: amtLeft,
