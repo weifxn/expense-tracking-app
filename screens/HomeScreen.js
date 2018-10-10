@@ -79,7 +79,9 @@ export default class HomeScreen extends React.Component {
       defaultMealIndex: mealIndex
     });
 
-    AsyncStorage.getItem("aaaa").then(itemsJSON => {
+
+
+    AsyncStorage.getItem("donut").then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -87,28 +89,41 @@ export default class HomeScreen extends React.Component {
         });
       } else {
         var storage = JSON.parse(itemsJSON);
-        console.log(JSON.stringify(storage[0]));
-        this.setState({
-          data: storage,
-          modalVisible: true,
-          monthAllow: storage[0][0].totalAllowance,
-          monthLeft: storage[0][0].totalAllowanceLeft,
-          leftDays: storage[0][0].leftDays,
-          dayAllowanceTotal: storage[0][0].dayAllowanceTotal,
-          dayAllowanceLeft: storage[0][0].dayAllowanceLeft,
+        console.log(_leftDays);
+        console.log(storage[0].leftDays);
+        if (_leftDays !== storage[0].leftDays) {
+          this.setState({
+            todayData: [0, 0, 0, 0],
+            dayAllowanceTotal: storage[0].dayAllowanceTotal,
+            dayAllowanceLeft: storage[0].dayAllowanceTotal,
 
-          todayData: storage[0][0].todayData,
-        });
+            monthAllow: storage[0].totalAllowance,
+            monthLeft: storage[0].totalAllowanceLeft,
 
-        console.log(JSON.stringify(storage[0][0].leftDays));
-        console.log(this.state.dayAllowanceLeft);
+            modalVisible: true,
+
+            data: storage,
+          });
+        } else {
+          this.setState({
+            data: storage,
+            modalVisible: true,
+            monthAllow: storage[0].totalAllowance,
+            monthLeft: storage[0].totalAllowanceLeft,
+            leftDays: storage[0].leftDays,
+            dayAllowanceTotal: storage[0].dayAllowanceTotal,
+            dayAllowanceLeft: storage[0].dayAllowanceLeft,
+
+            todayData: storage[0].todayData
+          });
+        }
       }
     });
   };
 
   // for saving
   save = item => {
-    AsyncStorage.setItem("aaaa", JSON.stringify(item));
+    AsyncStorage.setItem("donut", JSON.stringify(item));
   };
 
   // sort [todayData, dayAllowanceLeft, dayTotal,dayofmonth,allowance]
@@ -228,16 +243,14 @@ export default class HomeScreen extends React.Component {
 
     this.appendSave(this.state.todayData);
 
-    var forStorage = [
-      {
-        totalAllowance: this.state.monthAllow,
-        totalAllowanceLeft: monthLeft,
-        leftDays: dleft,
-        dayAllowanceTotal: total,
-        dayAllowanceLeft: amtLeft,
-        todayData: this.state.todayData
-      }
-    ];
+    var forStorage = {
+      totalAllowance: this.state.monthAllow,
+      totalAllowanceLeft: monthLeft,
+      leftDays: dleft,
+      dayAllowanceTotal: total,
+      dayAllowanceLeft: amtLeft,
+      todayData: this.state.todayData
+    };
 
     console.log(JSON.stringify(forStorage));
 
