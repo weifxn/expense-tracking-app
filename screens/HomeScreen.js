@@ -67,7 +67,6 @@ export default class HomeScreen extends React.Component {
     var hour = now.getHours();
     var maxDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
     var _leftDays = maxDays - _date;
-    var _leftDays = 0 // for test
 
     if (hour < 11) {
       mealIndex = 0;
@@ -84,7 +83,7 @@ export default class HomeScreen extends React.Component {
 
 
 
-    AsyncStorage.getItem("donus").then(itemsJSON => {
+    AsyncStorage.getItem("mostorage").then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -144,7 +143,7 @@ export default class HomeScreen extends React.Component {
 
   // for saving
   save = item => {
-    AsyncStorage.setItem("donus", JSON.stringify(item));
+    AsyncStorage.setItem("mostorage", JSON.stringify(item));
   };
 
   // sort [todayData, dayAllowanceLeft, dayTotal,dayofmonth,allowance]
