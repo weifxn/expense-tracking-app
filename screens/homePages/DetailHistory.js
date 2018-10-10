@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, Text, View,
   TouchableWithoutFeedback,
-  Keyboard, FlatList } from 'react-native';
+  Keyboard, FlatList, ScrollView } from 'react-native';
 import styles from '../../styles/Styles'
 import CardInput from '../../components/CardInput';
 import CardButton from '../../components/CardButton';
@@ -18,7 +18,8 @@ export default class DetailHistory extends React.Component {
 
   convert = (indexMain, index) => {
     var total = this.state.listData[indexMain][index]
-    total = (total/360)*37
+    var dayAllowanceTotal = this.state.listData[indexMain][6]
+    total = (total/360)*dayAllowanceTotal
     return total
   }
 
@@ -45,11 +46,12 @@ export default class DetailHistory extends React.Component {
     three = parseFloat(three).toFixed(2)
     four = parseFloat(four).toFixed(2)
     return (
+    <ScrollView>
     
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
                 <View style={{ padding: 10 }} />
 
-      <Text style={{fontSize: 40, fontWeight: 'bold'}}> Sept {this.state.listData[index][4]}</Text>
+      <Text style={{fontSize: 40, fontWeight: 'bold'}}> {this.state.listData[index][5]}/{this.state.listData[index][4]}</Text>
                   <View style={{ padding: 10 }} />
 
     <View style={{ padding: 30 }} />
@@ -78,6 +80,7 @@ export default class DetailHistory extends React.Component {
       </View>
 
       </View>
+      </ScrollView>
     );
   }
 }

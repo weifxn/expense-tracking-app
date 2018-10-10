@@ -56,7 +56,9 @@ export default class HomeScreen extends React.Component {
     dayAllowanceLeft: null,
 
     isMeal: "",
-    defaultMealIndex: null
+    defaultMealIndex: null,
+
+    history: []
   };
 
   componentDidMount = () => {
@@ -65,6 +67,7 @@ export default class HomeScreen extends React.Component {
     var hour = now.getHours();
     var maxDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
     var _leftDays = maxDays - _date;
+    var _leftDays = 0 // for test
 
     if (hour < 11) {
       mealIndex = 0;
@@ -81,7 +84,7 @@ export default class HomeScreen extends React.Component {
 
 
 
-    AsyncStorage.getItem("donut").then(itemsJSON => {
+    AsyncStorage.getItem("donus").then(itemsJSON => {
       if (itemsJSON === null) {
         this.setState({
           isFirst: true,
@@ -91,8 +94,14 @@ export default class HomeScreen extends React.Component {
         var storage = JSON.parse(itemsJSON);
         console.log(_leftDays);
         console.log(storage[0].leftDays);
+      
+        // new day
         if (_leftDays !== storage[0].leftDays) {
+          var forHistory = [...storage[0].todayData, now.getMonth(), _date, storage[0].dayAllowanceTotal]
+          var historyArr = [forHistory, ...storage[0].history]
+          
           this.setState({
+            history: historyArr,
             todayData: [0, 0, 0, 0],
             dayAllowanceTotal: storage[0].dayAllowanceTotal,
             dayAllowanceLeft: storage[0].dayAllowanceTotal,
@@ -103,10 +112,19 @@ export default class HomeScreen extends React.Component {
             modalVisible: true,
 
             data: storage,
+            leftDays: _leftDays
           });
+          // new month
+          if (_date === 1) {
+            this.setState({
+              monthLeft: storage[0].totalAllowance
+            })
+          }
+          console.log(JSON.stringify(this.state.history))
         } else {
           this.setState({
             data: storage,
+            history: storage[0].history,
             modalVisible: true,
             monthAllow: storage[0].totalAllowance,
             monthLeft: storage[0].totalAllowanceLeft,
@@ -123,7 +141,7 @@ export default class HomeScreen extends React.Component {
 
   // for saving
   save = item => {
-    AsyncStorage.setItem("donut", JSON.stringify(item));
+    AsyncStorage.setItem("donus", JSON.stringify(item));
   };
 
   // sort [todayData, dayAllowanceLeft, dayTotal,dayofmonth,allowance]
@@ -178,11 +196,14 @@ export default class HomeScreen extends React.Component {
   };
 
   onPressHistory = () => {
-    this.props.navigation.navigate("History");
+    this.props.navigation.navigate("History", {
+        listData: this.state.history
+      });
   };
 
   onPressTransfer = () => {
     this.props.navigation.navigate("Transfer");
+
     this.setModalVisible(false);
   };
   onPressWithdraw = () => {
@@ -223,11 +244,8 @@ export default class HomeScreen extends React.Component {
     var date = now.getDate();
 
     var newTodayData = this.state.todayData;
-    if (mealIndex === 3) {
       newTodayData[mealIndex] = perc + newTodayData[mealIndex];
-    } else {
-      newTodayData[mealIndex] = perc;
-    }
+   
 
     var monthLeft = this.state.monthAllow - this.state.dayAllowanceTotal;
 
@@ -244,6 +262,7 @@ export default class HomeScreen extends React.Component {
     this.appendSave(this.state.todayData);
 
     var forStorage = {
+      history: this.state.history,
       totalAllowance: this.state.monthAllow,
       totalAllowanceLeft: monthLeft,
       leftDays: dleft,

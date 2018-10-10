@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TextInput, Text, View,
   TouchableOpacity,
-  Keyboard, FlatList } from 'react-native';
+  Keyboard, FlatList,ScrollView } from 'react-native';
 import styles from '../../styles/Styles'
 import CardInput from '../../components/CardInput';
 import CardButton from '../../components/CardButton';
@@ -12,26 +12,7 @@ export default class History extends React.Component {
     title: "History"
   };
   state ={
-    listData: [
-    [20,70,80,80,'24'],
-    [40,60,70,40,'23'],
-    [30,70,90,100,'22'],
-    [50,60,100,130,'21'],
-    [50,70,80,80,'20'],
-    [40,70,70,40,'19'],
-    [50,60,70,90,'18'],
-    [30,60,80,100,'17'],
-    [40,50,80,50,'16'],
-    [50,60,90,30,'15'],
-    [10,50,70,50,'14'],
-    [40,50,100,50,'13'],
-    [40,70,110,90,'12'],
-    [50,60,90,110,'11'],
-    [40,70,60,70,'10'],
-    [50,60,70,80,'9'],
-    [10,90,80,150,'8'],
-
-    ]
+    listData: this.props.navigation.getParam('listData'),
   }
 
   onPressBar = (index) => {
@@ -46,7 +27,7 @@ export default class History extends React.Component {
 
   renderList = ({ item, index }) => (
     <View style={{paddingTop: 20}}>
-    <Text style={{fontSize: 20, padding: 2}}>September {item[4]}</Text>
+    <Text style={{fontSize: 20, padding: 2}}>{item[5]}/{item[4]}</Text>
     <TouchableOpacity
       onPress={()=>this.onPressBar(index)}
     >
@@ -63,6 +44,7 @@ export default class History extends React.Component {
   )
   render() {
     return (
+      <ScrollView>
     
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
       <FlatList
@@ -78,6 +60,7 @@ export default class History extends React.Component {
       </View>
 
       </View>
+      </ScrollView>
     );
   }
 }
